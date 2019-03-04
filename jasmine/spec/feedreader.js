@@ -9,7 +9,7 @@ $(function() {
         });
 
 
-        /* Elabore um teste que faça loop em cada feed no objeto allFeeds e 
+        /* faz um loop em cada feed no objeto allFeeds e 
          * garanta que ele tenha uma URL definida e não esteja vazia.
          */
 
@@ -17,32 +17,26 @@ $(function() {
             for(const allFeed of allFeeds){
                 expect(allFeed.url).toBeDefined();
                 expect(allFeed.url.length).not.toBe(0);
-                if(allFeed < allFeeds){
-                    break;
-                }
             }
         })
 
       
 
 
-        /* Elabore um teste que faça loop em cada feed no objeto allFeeds, 
+        /* faz um loop em cada feed no objeto allFeeds, 
          * e garanta que ele tenha um nome definido e não esteja vazio.
          */
         it('name não definido e a name não pode ficar null', function(){
             for(const allFeed of allFeeds){
                 expect(allFeed.name).toBeDefined();
                 expect(allFeed.name.length).not.toBe(0);
-                if(allFeed < allFeeds){
-                    break;
-                }
             }
         });
 
     });
 
 
-    /* Elabore uma nova suíte de testes, denominada "O menu". */
+    /* teste suíte "o menu" para verificaçao do mesmo*/
     describe('O menu',function(){
         let Body;
         let Menu;
@@ -50,17 +44,16 @@ $(function() {
             Body = $('body');
             Menu = $('.menu-icon-link');
         });
-         /* Elabore um teste que garanta que o elemento de menu permaneça oculto por padrão. 
-          * Você precisará analisar o HTML e o CSS para determinar como 
-          * ocultaremos/mostraremos o elemento de menu.
-         */
+
+         /*O teste que garanta que o elemento de menu permaneça oculto por padrão.     
+          */
         it('verifica se o menu esta oculto', function () {
             expect(Body.hasClass('menu-hidden')).toBeTruthy();
         });
 
-         /* Elabore um teste que garanta que o menu altere a visibilidade quando alguém clica no item de menu.
-          * Esse teste deve ter duas expectativas: o menu deve ser exibido quando alguém clica nele e ocultado 
-          * quando mais um clique é feito.
+         /* garanta que o menu altere a visibilidade quando alguém clica no item de menu.
+          * o menu deve ser exibido quando alguém clicando uma vez nele 
+          * e ocultado quando clicado a segunda vez.
           */
         it('verifica se o menu foi clicado', function(){
             Menu.click();
@@ -72,19 +65,21 @@ $(function() {
     })
        
 
-    /* Elabore uma suíte de testes denominada "Entradas iniciais"*/
-    describe('Initial Entries', function(){
-        /* Elabore um teste que garanta que, quando a função loadFeed for chamada e concluir seu trabalho, 
-         * exista pelo menos um elemento .entry no contêiner .feed.
-         */
+    /* teste suíte "Entradas iniciais" */
+    describe('Entradas iniciais', function(){
+        //carrega o feed
         beforeEach(function(done){
             loadFeed(0,function(){
                 done();
             });
             
         });
+
+        /* garanta que quando a função loadFeed for chamada e concluir seu trabalho, 
+         * exista pelo menos um elemento .entry no contêiner .feed.
+         */
         it('deve ter entrada de  elemento no .feed container', function(){
-            expect($('.entry').length).not.toBe(0);
+            expect($('.feed .entry').length).not.toBe(0);
         });
 
 
@@ -92,22 +87,21 @@ $(function() {
     });
         
 
-    /* Elabore uma nova suíte de testes, denominada "Nova seleção de feed".*/
-    describe('New Feed Selection', function(){
-
-        /* Elabore um teste que garanta que, 
-         * quando um novo feed for carregado pela função loadFeed, 
-         * o conteúdo realmente mude.
-         */
-
+    /* testes suíte "Nova seleção de feed".*/
+    describe('Nova seleção de feed', function(){
+  
         beforeEach(function(done){
+            //carrega o primeiro feed
             loadFeed(0, function(){
-                
+               //salva o feed atual na varaiavel feedAtual 
                 feedAtual = $('.feed').html();
+                //carrega o segundo feed
                 loadFeed(1, done);
             });
         });
-
+         /*verifica para o novo feed nao ser igual ao feed da variavel feedAtual,
+         * para alterar que o conteúdo seja realmente alterado. 
+         */   
          it('Novo conteudo', function(){
             expect($('.feed').html()).not.toBe(feedAtual);
          });
